@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DANFER School - Admin Panel</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Poppins', 'Segoe UI', sans-serif; 
+        }
+        
+        body { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333; 
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        /* Login Container */
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+        }
+        
+        /* Dashboard Container */
+        .dashboard-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 1200px;
+            min-height: 700px;
+            overflow: hidden;
+            display: none;
+        }
+        
+        /* Login Header */
+        .login-header {
+            background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .login-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        /* Login Form */
+        .login-form {
+            padding: 40px 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            border-color: #1a237e;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+        }
+        
+        .password-input {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #777;
+            cursor: pointer;
+        }
+        
+        /* Login Button */
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(26, 35, 126, 0.3);
+        }
+        
+        /* Error Message */
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+        }
+        
+        /* Back to Home */
+        .back-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .back-home a {
+            color: #1a237e;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-home a:hover {
+            color: #303f9f;
+        }
+        
+        /* Dashboard Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%);
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dashboard-title h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .dashboard-title p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logout-btn:hover {
+            background: white;
+            color: #1a237e;
+        }
+        
+        /* Dashboard Tabs */
+        .dashboard-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .tab-btn {
+            padding: 20px 30px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .tab-btn:hover {
+            color: #1a237e;
+            background: rgba(26, 35, 126, 0.05);
+        }
+        
+        .tab-btn.active {
+            color: #1a237e;
+            background: white;
+        }
+        
+        .tab-btn.active:after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #1a237e;
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            padding: 30px;
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Form Sections */
+        .form-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            color: #1a237e;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f7ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #ff6b6b;
+        }
+        
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-group select[multiple] {
+            height: 120px;
+        }
+        
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        
+        /* Form Buttons */
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .submit-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(26, 35, 126, 0.3);
+        }
+        
+        .reset-btn {
+            padding: 12px 30px;
+            background: #f8f9fa;
+            color: #666;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-btn:hover {
+            background: #e9ecef;
+        }
+        
+        /* Existing Items */
+        .existing-items {
+            margin-top: 30px;
+        }
+        
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .item-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+        
+        .item-title {
+            font-weight: 600;
+            color: #1a237e;
+            font-size: 1.1rem;
+            flex: 1;
+            margin-right: 10px;
+        }
+        
+        .item-type {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            white-space: nowrap;
+        }
+        
+        .item-content {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 0.85rem;
+        }
+        
+        .item-date {
+            color: #888;
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .edit-btn, .delete-btn {
+            padding: 5px 15px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .edit-btn {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .edit-btn:hover {
+            background: #bbdefb;
+        }
+        
+        .delete-btn {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+        
+        .delete-btn:hover {
+            background: #ffcdd2;
+        }
+        
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+        
+        .success-message.show {
+            transform: translateX(0);
+        }
+        
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1a237e;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .dashboard-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab-btn {
+                flex: 1 0 calc(50% - 10px);
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .submit-btn, .reset-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-container, .dashboard-container {
+                border-radius: 15px;
+            }
+            
+            .login-header, .login-form {
+                padding: 30px 20px;
+            }
+            
+            .tab-btn {
+                flex: 1 0 100%;
+                padding: 12px;
+                font-size: 0.85rem;
+            }
+            
+            .form-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Login Container -->
+<div class="login-container" id="loginContainer">
+    <div class="login-header">
+        <h1>Admin Panel</h1>
+        <p>DANFER School Management System</p>
+    </div>
+    
+    <div class="error-message" id="errorMessage">
+        Invalid credentials. Please try again.
+    </div>
+    
+    <form class="login-form" id="loginForm">
+        <div class="form-group">
+            <label for="username">Admin Username</label>
+            <input type="text" id="username" placeholder="Enter username" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Secret Password</label>
+            <div class="password-input">
+                <input type="password" id="password" placeholder="Enter secret password" required>
+                <button type="button" class="toggle-password" id="togglePassword">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+        </div>
+        
+        <button type="submit" class="login-btn">
+            <i class="fas fa-lock"></i> Secure Login
+        </button>
+        
+        <div class="back-home">
+            <a href="index.html">
+                <i class="fas fa-arrow-left"></i> Back to School Website
+            </a>
+        </div>
+    </form>
+</div>
+
+<!-- Dashboard Container -->
+<div class="dashboard-container" id="dashboardContainer">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div class="dashboard-title">
+            <h1>DANFER School Admin Panel</h1>
+            <p>Welcome, <span id="adminName">Administrator</span></p>
+        </div>
+        <button class="logout-btn" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </div>
+    
+    <!-- Dashboard Tabs -->
+    <div class="dashboard-tabs">
+        <button class="tab-btn active" data-tab="news">
+            <i class="fas fa-newspaper"></i> Manage News
+        </button>
+        <button class="tab-btn" data-tab="calendar">
+            <i class="fas fa-calendar-alt"></i> Manage Calendar
+        </button>
+    </div>
+    
+    <!-- News Tab -->
+    <div class="tab-content active" id="newsTab">
+        <!-- News Upload Form -->
+        <div class="form-section">
+            <h2 class="section-title">
+                <i class="fas fa-upload"></i> Upload News
+            </h2>
+            
+            <form id="newsForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="newsTitle">News Title *</label>
+                        <input type="text" id="newsTitle" placeholder="Enter news title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newsCategory">Category *</label>
+                        <select id="newsCategory" required>
+                            <option value="">Select category</option>
+                            <option value="general">General</option>
+                            <option value="exam">Exam</option>
+                            <option value="holiday">Holiday</option>
+                            <option value="event">Event</option>
+                            <option value="announcement">Announcement</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newsPriority">Priority Level</label>
+                        <select id="newsPriority">
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                            <option value="high">High</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newsAudience">Target Audience</label>
+                        <select id="newsAudience" multiple>
+                            <option value="all" selected>All</option>
+                            <option value="students">Students</option>
+                            <option value="teachers">Teachers</option>
+                            <option value="parents">Parents</option>
+                            <option value="staff">Staff</option>
+                        </select>
+                        <small>Hold Ctrl/Cmd to select multiple</small>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newsContent">News Content *</label>
+                    <textarea id="newsContent" placeholder="Enter news content..." required></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Publish News
+                    </button>
+                    <button type="reset" class="reset-btn">Reset Form</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Existing News -->
+        <div class="existing-items">
+            <h2 class="section-title">
+                <i class="fas fa-list"></i> Existing News
+            </h2>
+            <div class="items-grid" id="newsList">
+                <!-- News items will be loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Calendar Tab -->
+    <div class="tab-content" id="calendarTab">
+        <!-- Calendar Event Form -->
+        <div class="form-section">
+            <h2 class="section-title">
+                <i class="fas fa-calendar-plus"></i> Add Calendar Event
+            </h2>
+            
+            <form id="calendarForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="eventTitle">Event Title *</label>
+                        <input type="text" id="eventTitle" placeholder="Enter event title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventType">Event Type *</label>
+                        <select id="eventType" required>
+                            <option value="">Select type</option>
+                            <option value="exam">Exam</option>
+                            <option value="holiday">Holiday</option>
+                            <option value="event">Event</option>
+                            <option value="deadline">Deadline</option>
+                            <option value="meeting">Meeting</option>
+                            <option value="sports">Sports</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventStartDate">Start Date *</label>
+                        <input type="date" id="eventStartDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventEndDate">End Date (Optional)</label>
+                        <input type="date" id="eventEndDate">
+                    </div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="eventAllDay" checked> All Day Event
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventLocation">Location (Optional)</label>
+                        <input type="text" id="eventLocation" placeholder="e.g., Main Hall">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventAudience">Target Audience</label>
+                        <select id="eventAudience" multiple>
+                            <option value="all" selected>All</option>
+                            <option value="students">Students</option>
+                            <option value="teachers">Teachers</option>
+                            <option value="parents">Parents</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventDescription">Description (Optional)</label>
+                    <textarea id="eventDescription" placeholder="Enter event description..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-calendar-check"></i> Add to Calendar
+                    </button>
+                    <button type="reset" class="reset-btn">Reset Form</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Existing Events -->
+        <div class="existing-items">
+            <h2 class="section-title">
+                <i class="fas fa-calendar-week"></i> Existing Events
+            </h2>
+            <div class="items-grid" id="eventsList">
+                <!-- Calendar events will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Message -->
+<div class="success-message" id="successMessage">
+    <i class="fas fa-check-circle"></i>
+    <span id="successText">Operation successful!</span>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+</div>
+
+<script>
+    // API Configuration
+    const API_BASE = 'http://localhost:5000/api';
+    
+    // DOM Elements
+    const loginContainer = document.getElementById('loginContainer');
+    const dashboardContainer = document.getElementById('dashboardContainer');
+    const loginForm = document.getElementById('loginForm');
+    const errorMessage = document.getElementById('errorMessage');
+    const togglePassword = document.getElementById('togglePassword');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const successMessage = document.getElementById('successMessage');
+    const successText = document.getElementById('successText');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    
+    // News Form Elements
+    const newsForm = document.getElementById('newsForm');
+    const newsList = document.getElementById('newsList');
+    
+    // Calendar Form Elements
+    const calendarForm = document.getElementById('calendarForm');
+    const eventsList = document.getElementById('eventsList');
+    
+    // State
+    let authToken = localStorage.getItem('adminToken');
+    let adminName = localStorage.getItem('adminName') || 'Administrator';
+
+    // Check if already logged in
+    if (authToken) {
+        verifyToken();
+    }
+
+    // Toggle password visibility
+    togglePassword.addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const icon = this.querySelector('i');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.className = 'fas fa-eye-slash';
+        } else {
+            passwordInput.type = 'password';
+            icon.className = 'fas fa-eye';
+        }
+    });
+
+    // Login form submission
+    loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        try {
+            showLoading();
+            
+            const response = await fetch(`${API_BASE}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+            
+            const data = await response.json();
+            
+            hideLoading();
+            
+            if (data.success) {
+                // Save token and admin info
+                authToken = data.token;
+                adminName = data.user.username;
+                
+                localStorage.setItem('adminToken', authToken);
+                localStorage.setItem('adminName', adminName);
+                
+                // Switch to dashboard
+                showDashboard();
+                showSuccess('Login successful!');
+            } else {
+                showError(data.message || 'Invalid credentials');
+            }
+        } catch (error) {
+            hideLoading();
+            showError('Login failed. Please try again.');
+            console.error('Login error:', error);
+        }
+    });
+
+    // Verify token
+    async function verifyToken() {
+        try {
+            const response = await fetch(`${API_BASE}/auth/verify`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                showDashboard();
+            } else {
+                localStorage.removeItem('adminToken');
+                localStorage.removeItem('adminName');
+                showLogin();
+            }
+        } catch (error) {
+            console.error('Token verification error:', error);
+            showLogin();
+        }
+    }
+
+    // Show dashboard
+    function showDashboard() {
+        document.getElementById('adminName').textContent = adminName;
+        loginContainer.style.display = 'none';
+        dashboardContainer.style.display = 'block';
+        
+        // Load initial data
+        loadNews();
+        loadCalendarEvents();
+        
+        // Set current date in calendar form
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('eventStartDate').value = today;
+        document.getElementById('eventEndDate').min = today;
+    }
+
+    // Show login
+    function showLogin() {
+        loginContainer.style.display = 'block';
+        dashboardContainer.style.display = 'none';
+        loginForm.reset();
+    }
+
+    // Logout
+    logoutBtn.addEventListener('click', function() {
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminName');
+        authToken = null;
+        showLogin();
+        showSuccess('Logged out successfully');
+    });
+
+    // Tab switching
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tabId = this.dataset.tab;
+            
+            // Update active tab button
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Show corresponding tab content
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.id === `${tabId}Tab`) {
+                    content.classList.add('active');
+                }
+            });
+            
+            // Load data for tab if needed
+            if (tabId === 'news' && newsList.children.length === 0) {
+                loadNews();
+            } else if (tabId === 'calendar' && eventsList.children.length === 0) {
+                loadCalendarEvents();
+            }
+        });
+    });
+
+    // News form submission
+    newsForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const newsData = {
+            title: document.getElementById('newsTitle').value,
+            content: document.getElementById('newsContent').value,
+            category: document.getElementById('newsCategory').value,
+            priority: document.getElementById('newsPriority').value,
+            targetAudience: Array.from(document.getElementById('newsAudience').selectedOptions).map(opt => opt.value)
+        };
+        
+        try {
+            showLoading();
+            
+            const response = await fetch(`${API_BASE}/news`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newsData)
+            });
+            
+            const data = await response.json();
+            hideLoading();
+            
+            if (data.success) {
+                showSuccess('News published successfully!');
+                newsForm.reset();
+                loadNews(); // Refresh news list
+                
+                // Broadcast to news page
+                window.postMessage({ type: 'NEWS_ADDED' }, '*');
+            } else {
+                showError(data.message || 'Failed to publish news');
+            }
+        } catch (error) {
+            hideLoading();
+            showError('Failed to publish news. Please try again.');
+            console.error('News submission error:', error);
+        }
+    });
+
+    // Calendar form submission
+    calendarForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const eventData = {
+            title: document.getElementById('eventTitle').value,
+            type: document.getElementById('eventType').value,
+            startDate: document.getElementById('eventStartDate').value,
+            endDate: document.getElementById('eventEndDate').value || undefined,
+            allDay: document.getElementById('eventAllDay').checked,
+            location: document.getElementById('eventLocation').value || undefined,
+            description: document.getElementById('eventDescription').value || undefined,
+            targetAudience: Array.from(document.getElementById('eventAudience').selectedOptions).map(opt => opt.value)
+        };
+        
+        try {
+            showLoading();
+            
+            const response = await fetch(`${API_BASE}/calendar`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(eventData)
+            });
+            
+            const data = await response.json();
+            hideLoading();
+            
+            if (data.success) {
+                showSuccess('Event added to calendar!');
+                calendarForm.reset();
+                document.getElementById('eventStartDate').value = new Date().toISOString().split('T')[0];
+                loadCalendarEvents();
+                
+                // Broadcast to calendar page
+                window.postMessage({ type: 'CALENDAR_UPDATED' }, '*');
+            } else {
+                showError(data.message || 'Failed to add event');
+            }
+        } catch (error) {
+            hideLoading();
+            showError('Failed to add event. Please try again.');
+            console.error('Calendar submission error:', error);
+        }
+    });
+
+    // Load news from API
+    async function loadNews() {
+        try {
+            const response = await fetch(`${API_BASE}/news/admin/all`, {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                displayNews(data.news);
+            }
+        } catch (error) {
+            console.error('Error loading news:', error);
+            newsList.innerHTML = '<p>Failed to load news</p>';
+        }
+    }
+
+    // Display news in grid
+    function displayNews(newsItems) {
+        newsList.innerHTML = '';
+        
+        if (newsItems.length === 0) {
+            newsList.innerHTML = '<p>No news articles yet</p>';
+            return;
+        }
+        
+        // Filter out inactive news (isActive: false)
+        const activeNews = newsItems.filter(item => item.isActive !== false);
+        
+        activeNews.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.id = `admin-news-${item._id}`;
+            
+            const categoryColors = {
+                exam: '#ff6b6b',
+                holiday: '#4caf50',
+                event: '#2196f3',
+                announcement: '#ff9800',
+                general: '#1a237e'
+            };
+            
+            const date = new Date(item.createdAt).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+            
+            card.innerHTML = `
+                <div class="item-header">
+                    <div class="item-title">${item.title}</div>
+                    <span class="item-type" style="background: ${categoryColors[item.category] || '#1a237e'}">
+                        ${item.category}
+                    </span>
+                </div>
+                <div class="item-content">
+                    ${item.content.substring(0, 100)}${item.content.length > 100 ? '...' : ''}
+                </div>
+                <div class="item-footer">
+                    <div class="item-date">${date}</div>
+                    <div class="item-actions">
+                        <button class="delete-btn" onclick="deleteNews('${item._id}')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            newsList.appendChild(card);
+        });
+    }
+
+    // Load calendar events
+    async function loadCalendarEvents() {
+        try {
+            const response = await fetch(`${API_BASE}/calendar/admin/all`, {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                displayEvents(data.events);
+            }
+        } catch (error) {
+            console.error('Error loading events:', error);
+            eventsList.innerHTML = '<p>Failed to load events</p>';
+        }
+    }
+
+    // Display events in grid
+    function displayEvents(events) {
+        eventsList.innerHTML = '';
+        
+        if (events.length === 0) {
+            eventsList.innerHTML = '<p>No calendar events yet</p>';
+            return;
+        }
+        
+        events.forEach(event => {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            
+            const eventColors = {
+                exam: '#ff6b6b',
+                holiday: '#4caf50',
+                event: '#2196f3',
+                deadline: '#ff9800',
+                meeting: '#9c27b0',
+                sports: '#00bcd4'
+            };
+            
+            const startDate = new Date(event.startDate);
+            const dateStr = startDate.toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric'
+            });
+            
+            card.innerHTML = `
+                <div class="item-header">
+                    <div class="item-title">${event.title}</div>
+                    <span class="item-type" style="background: ${eventColors[event.type] || '#1a237e'}">
+                        ${event.type}
+                    </span>
+                </div>
+                <div class="item-content">
+                    ${event.description ? event.description.substring(0, 100) + (event.description.length > 100 ? '...' : '') : 'No description'}
+                </div>
+                <div class="item-footer">
+                    <div class="item-date">${dateStr}</div>
+                    <div class="item-actions">
+                        <button class="delete-btn" onclick="deleteEvent('${event._id}')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            eventsList.appendChild(card);
+        });
+    }
+
+    // ==================== UPDATED DELETE FUNCTION ====================
+    // Delete news function
+    async function deleteNews(newsId) {
+        if (!confirm('Are you sure you want to delete this news item?')) {
+            return;
+        }
+        
+        try {
+            showLoading();
+            
+            const response = await fetch(`${API_BASE}/news/${newsId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                }
+            });
+            
+            const data = await response.json();
+            hideLoading();
+            
+            if (data.success) {
+                showSuccess('News deleted successfully!');
+                loadNews(); // Refresh admin list
+                
+                // Broadcast to other tabs (news page)
+                window.postMessage({ type: 'NEWS_DELETED', newsId: newsId }, '*');
+            } else {
+                showError(data.message || 'Failed to delete news');
+            }
+        } catch (error) {
+            hideLoading();
+            showError('Failed to delete news. Please try again.');
+            console.error('Delete news error:', error);
+        }
+    }
+
+    // ==================== ADDED: Listen for delete events ====================
+    // Add this listener in admin.html to listen for delete events
+    window.addEventListener('message', function(event) {
+        if (event.data.type === 'NEWS_DELETED') {
+            // Refresh the news list when news is deleted from news page
+            loadNews();
+        }
+    });
+
+    // Delete event
+    async function deleteEvent(eventId) {
+        if (!confirm('Are you sure you want to delete this event?')) {
+            return;
+        }
+        
+        try {
+            showLoading();
+            
+            const response = await fetch(`${API_BASE}/calendar/${eventId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                }
+            });
+            
+            const data = await response.json();
+            hideLoading();
+            
+            if (data.success) {
+                showSuccess('Event deleted successfully!');
+                loadCalendarEvents();
+                
+                // Broadcast to calendar page
+                window.postMessage({ type: 'CALENDAR_DELETED' }, '*');
+            } else {
+                showError(data.message || 'Failed to delete event');
+            }
+        } catch (error) {
+            hideLoading();
+            showError('Failed to delete event. Please try again.');
+            console.error('Delete event error:', error);
+        }
+    }
+
+    // Utility functions
+    function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+            errorMessage.style.display = 'none';
+        }, 5000);
+    }
+
+    function showSuccess(message) {
+        successText.textContent = message;
+        successMessage.classList.add('show');
+        setTimeout(() => {
+            successMessage.classList.remove('show');
+        }, 3000);
+    }
+
+    function showLoading() {
+        loadingOverlay.style.display = 'flex';
+    }
+
+    function hideLoading() {
+        loadingOverlay.style.display = 'none';
+    }
+
+    // Initialize date inputs
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('eventStartDate').value = today;
+    document.getElementById('eventEndDate').min = today;
+    
+    // Update end date min when start date changes
+    document.getElementById('eventStartDate').addEventListener('change', function() {
+        document.getElementById('eventEndDate').min = this.value;
+    });
+</script>
+</body>
+</html>

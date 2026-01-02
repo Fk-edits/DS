@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developers - DANFER School Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #f8f9fa; color: #333; line-height: 1.6; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-padding { padding: 80px 0; }
+        
+        /* Header */
+        .header { 
+            background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%); 
+            color: white; 
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .back-btn { 
+            color: white; 
+            text-decoration: none; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.2); transform: translateX(-5px); }
+        
+        /* Page Title */
+        .page-title { 
+            text-align: center; 
+            margin: 40px 0 60px;
+            position: relative;
+        }
+        .page-title h1 { 
+            color: #1a237e; 
+            font-size: 2.8rem; 
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .page-title h1:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: #ff6b6b;
+            border-radius: 2px;
+        }
+        .page-title p { color: #666; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        
+        /* Team Section */
+        .team-section {
+            margin-bottom: 80px;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        .team-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .team-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border: 5px solid #e8f4ff;
+            box-shadow: 0 5px 15px rgba(26, 35, 126, 0.2);
+            position: relative;
+        }
+        .team-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .team-card:hover .team-avatar img {
+            transform: scale(1.1);
+        }
+        .avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a237e, #303f9f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: 600;
+        }
+        .team-name {
+            color: #1a237e;
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+        .team-role {
+            color: #ff6b6b;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .team-bio {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        .team-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .skill-tag {
+            background: #e8f4ff;
+            color: #1a237e;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .team-contact {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .contact-link {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a237e;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .contact-link:hover {
+            background: #1a237e;
+            color: white;
+            transform: translateY(-5px);
+        }
+        
+        /* Technologies Section */
+        .tech-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .tech-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .tech-card:hover {
+            border-color: #1a237e;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(26, 35, 126, 0.1);
+        }
+        .tech-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #1a237e;
+        }
+        .tech-name {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .tech-purpose {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Timeline Section */
+        .timeline-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto 0;
+            padding-left: 30px;
+        }
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #1a237e, #ff6b6b);
+            border-radius: 2px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 30px;
+        }
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: #1a237e;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px #1a237e;
+        }
+        .timeline-date {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        .timeline-content h3 {
+            color: #1a237e;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        .timeline-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+        }
+        .contact-section h2 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        .contact-section p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .contact-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+        
+        /* Feature Highlights */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1a237e, #303f9f);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 1.5rem;
+        }
+        .feature-card h4 {
+            color: #1a237e;
+            margin-bottom: 10px;
+        }
+        .feature-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title h1 { font-size: 2.2rem; }
+            .team-grid { grid-template-columns: 1fr; }
+            .team-avatar { width: 120px; height: 120px; }
+            .tech-grid { grid-template-columns: repeat(2, 1fr); }
+            .timeline { padding-left: 20px; }
+            .contact-info { flex-direction: column; align-items: center; }
+            .contact-item { width: 100%; max-width: 300px; justify-content: center; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+                <h2>DANFER School Portal</h2>
+                <div class="current-date" id="currentDate"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container section-padding">
+        <div class="page-title">
+            <h1><i class="fas fa-laptop-code"></i> Development Team</h1>
+            <p>Meet the team behind DANFER School Portal and learn about the technologies powering our platform</p>
+        </div>
+
+        <!-- Team Section -->
+        <div class="team-section">
+            <h2 style="text-align: center; color: #1a237e; margin-bottom: 20px; font-size: 2rem;">Our Development Team</h2>
+            <p class="section-subtitle">A dedicated team of developers working to create the best digital experience for DANFER School</p>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <!-- Replace with actual image -->
+                        <img src="images/image.jpg" alt="Natnael Mandefro">
+                    </div>
+                    <h3 class="team-name">Natnael Mandefro</h3>
+                    <div class="team-role">Lead Developer & Project Manager</div>
+                    <div class="team-bio">
+                        Full-stack developer with 2+ years experience in web development. Specializes in MERN stack and system architecture.
+                    </div>
+                    <div class="team-skills">
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">API Design</span>
+                    </div>
+                    <div class="team-contact">
+                       
+                        </a>
+                        <a href="atnael" class="contact-link">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="atnael" class="contact-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <!-- Replace with actual image -->
+                        <img src="images/image.jpg" alt="Fitsum E.">
+                    </div>
+                    <h3 class="team-name">Fikir Habtamu</h3>
+                    <div class="team-role">Backend Developer & UI/UX Designer</div>
+                    <div class="team-bio">
+                        Creative designer with expertise in modern web interfaces, user experience, and responsive design. Strong backend skills in Node.js and database management.
+                    </div>
+                    <div class="team-skills">
+                        <span class="skill-tag">HTML/CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">UI/UX Design</span>
+                        <span class="skill-tag">MongoDB</span>
+                    </div>
+                    <div class="team-contact">
+                        
+                        </a>
+                        <a href="pet_fikir" class="contact-link">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="pet_fikir" class="contact-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <div class="avatar-placeholder">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                    </div>
+                    <h3 class="team-name">Join Our Team!</h3>
+                    <div class="team-role">Open Position</div>
+                    <div class="team-bio">
+                        We're looking for passionate developers to join our team. Frontend, backend, or full-stack - if you love educational technology, we want to hear from you!
+                    </div>
+                    <div class="team-skills">
+                        <span class="skill-tag">Web Development</span>
+                        <span class="skill-tag">Education Tech</span>
+                        <span class="skill-tag">Team Player</span>
+                    </div>
+                    <div class="team-contact">
+                        <a href="ourweb" class="contact-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="ourweb" class="contact-link">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technologies Section -->
+        <div class="tech-section">
+            <h2 style="color: #1a237e; margin-bottom: 20px; font-size: 2rem;">Technologies Used</h2>
+            <p style="color: #666; margin-bottom: 30px;">Modern stack ensuring performance, security, and scalability</p>
+            
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fab fa-html5"></i>
+                    </div>
+                    <h4 class="tech-name">HTML5</h4>
+                    <p class="tech-purpose">Semantic Markup</p>
+                </div>
+                
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fab fa-css3-alt"></i>
+                    </div>
+                    <h4 class="tech-name">CSS3</h4>
+                    <p class="tech-purpose">Styling & Layout</p>
+                </div>
+                
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fab fa-js"></i>
+                    </div>
+                    <h4 class="tech-name">JavaScript</h4>
+                    <p class="tech-purpose">Client-side Logic</p>
+                </div>
+                
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fab fa-node-js"></i>
+                    </div>
+                    <h4 class="tech-name">Node.js</h4>
+                    <p class="tech-purpose">Backend Runtime</p>
+                </div>
+                
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4 class="tech-name">MongoDB</h4>
+                    <p class="tech-purpose">Database</p>
+                </div>
+                
+                <div class="tech-card">
+                    <div class="tech-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h4 class="tech-name">Express.js</h4>
+                    <p class="tech-purpose">API Framework</p>
+                </div>
+                
+                
+                
+            </div>
+        </div>
+
+        <!-- Key Features -->
+        <div>
+            <h2 style="text-align: center; color: #1a237e; margin-bottom: 20px; font-size: 2rem;">Key Features</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                Our school portal includes comprehensive features designed to enhance the educational experience
+            </p>
+            
+            <div class="features-grid">
+               
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <h4>News & Updates</h4>
+                    <p>Dynamic news publishing system with categories and search</p>
+                </div>
+                
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h4>Event Calendar</h4>
+                    <p>Comprehensive calendar with event types and reminders</p>
+                </div>
+                
+                
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>Responsive Design</h4>
+                    <p>Fully responsive interface for all devices</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h4>Secure Authentication</h4>
+                    <p>JWT-based authentication with password hashing</p>
+                </div>
+                
+               
+            </div>
+        </div>
+
+        <!-- Timeline Section -->
+        <div class="timeline-section">
+            <h2 style="color: #1a237e; margin-bottom: 20px; font-size: 2rem;">Development Timeline</h2>
+            <p style="color: #666; margin-bottom: 30px;">Journey of building the DANFER School Portal</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Week 1</div>
+                    <div class="timeline-content">
+                        <h3>Project Planning & Design</h3>
+                        <p>Requirements gathering, system architecture design, database schema planning, and UI/UX wireframing.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Week 2</div>
+                    <div class="timeline-content">
+                        <h3>Backend Development</h3>
+                        <p>Setting up Express.js server, MongoDB connection, API routes, authentication system, and file upload functionality.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Week 3</div>
+                    <div class="timeline-content">
+                        <h3>Frontend Development</h3>
+                        <p>Creating responsive HTML/CSS pages, implementing JavaScript functionality, and connecting to backend APIs.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Week 4</div>
+                    <div class="timeline-content">
+                        <h3>Testing & Deployment</h3>
+                        <p>Comprehensive testing, bug fixing, performance optimization, and deployment to production server.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2><i class="fas fa-headset"></i> Get In Touch</h2>
+            <p>Have questions about the portal or want to contribute? Contact our development team</p>
+            
+            <div class="contact-info">
+                <a href="mailto:developers@danferschool.edu" class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    soon
+                </a>
+                <a href="https://github.com/danferschool" class="contact-item">
+                    <i class="fab fa-github"></i>
+                    soon
+                </a>
+                <a href="https://danferschool.edu" class="contact-item">
+                    <i class="fas fa-globe"></i>
+                   soon
+                </a>
+            </div>
+            
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">
+                    <i class="fas fa-code"></i> Built with passion for education technology<br>
+                    © 2024 DANFER School Portal Development Team
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Add hover effects to team cards
+        document.querySelectorAll('.team-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+                this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 10px 30px rgba(0,0,0,0.08)';
+            });
+        });
+
+        // Add animation to timeline items
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateX(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe timeline items
+        document.querySelectorAll('.timeline-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(-20px)';
+            item.style.transition = `opacity 0.5s ease ${index * 0.2}s, transform 0.5s ease ${index * 0.2}s`;
+            observer.observe(item);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add image loading fallback
+        document.querySelectorAll('.team-avatar img').forEach(img => {
+            img.addEventListener('error', function() {
+                // If image fails to load, show placeholder
+                this.style.display = 'none';
+                const parent = this.parentElement;
+                const placeholder = document.createElement('div');
+                placeholder.className = 'avatar-placeholder';
+                placeholder.innerHTML = this.alt.charAt(0);
+                parent.appendChild(placeholder);
+            });
+        });
+    </script>
+</body>
+</html>

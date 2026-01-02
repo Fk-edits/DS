@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rules & Regulations - DANFER School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #f8f9fa; color: #333; line-height: 1.6; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-padding { padding: 80px 0; }
+        
+        /* Header */
+        .header { 
+            background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%); 
+            color: white; 
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .back-btn { 
+            color: white; 
+            text-decoration: none; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.2); transform: translateX(-5px); }
+        
+        /* Page Title */
+        .page-title { 
+            text-align: center; 
+            margin: 40px 0 60px;
+            position: relative;
+        }
+        .page-title h1 { 
+            color: #1a237e; 
+            font-size: 2.8rem; 
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .page-title h1:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: #ff6b6b;
+            border-radius: 2px;
+        }
+        .page-title p { color: #666; font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+        
+        /* Rules Navigation */
+        .rules-nav {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+        .rules-nav h3 {
+            color: #1a237e;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .nav-link {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            color: #1a237e;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: #1a237e;
+            color: white;
+            border-color: #1a237e;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(26, 35, 126, 0.2);
+        }
+        
+        /* Rules Content */
+        .rules-content {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .rules-section {
+            margin-bottom: 50px;
+            scroll-margin-top: 120px;
+        }
+        .rules-section:last-child {
+            margin-bottom: 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        .section-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1a237e, #303f9f);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        .section-title {
+            color: #1a237e;
+            font-size: 1.8rem;
+            margin: 0;
+        }
+        .rules-list {
+            list-style: none;
+        }
+        .rule-item {
+            margin-bottom: 20px;
+            padding-left: 35px;
+            position: relative;
+        }
+        .rule-item:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 25px;
+            height: 25px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .rule-item.warning:before {
+            content: '!';
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        .rule-item.important:before {
+            content: '★';
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        .rule-text {
+            color: #444;
+            line-height: 1.7;
+            margin-bottom: 5px;
+        }
+        .rule-details {
+            color: #666;
+            font-size: 0.95rem;
+            padding-left: 20px;
+            border-left: 3px solid #eee;
+            margin-top: 10px;
+            margin-left: 5px;
+        }
+        
+        /* PDF Section */
+        .pdf-section {
+            background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 60px;
+            text-align: center;
+        }
+        .pdf-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .pdf-section p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .pdf-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .pdf-btn {
+            padding: 15px 30px;
+            background: white;
+            color: #1a237e;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .pdf-btn:hover {
+            background: #ff6b6b;
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        /* Search Box */
+        .search-box {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 18px 25px;
+            padding-left: 60px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #1a237e;
+            box-shadow: 0 5px 20px rgba(26, 35, 126, 0.1);
+        }
+        .search-icon {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 1.2rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title h1 { font-size: 2.2rem; }
+            .rules-nav { position: static; }
+            .nav-links { flex-direction: column; }
+            .nav-link { text-align: center; }
+            .rules-content { padding: 25px; }
+            .section-header { flex-direction: column; text-align: center; gap: 10px; }
+            .section-icon { width: 50px; height: 50px; font-size: 1.2rem; }
+            .section-title { font-size: 1.5rem; text-align: center; }
+            .pdf-btns { flex-direction: column; }
+            .pdf-btn { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+                <h2>DANFER School Portal</h2>
+                <div class="current-date" id="currentDate"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container section-padding">
+        <div class="page-title">
+            <h1><i class="fas fa-graduation-cap"></i> School Rules & Regulations</h1>
+            <p>Maintaining discipline, safety, and a conducive learning environment for all students</p>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-box">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search for specific rules or keywords...">
+        </div>
+
+        <!-- Rules Navigation -->
+        <div class="rules-nav">
+            <h3><i class="fas fa-list"></i> Quick Navigation</h3>
+            <div class="nav-links">
+                <a href="#general" class="nav-link active">General Rules</a>
+                <a href="#academic" class="nav-link">Academic Rules</a>
+                <a href="#conduct" class="nav-link">Code of Conduct</a>
+                <a href="#uniform" class="nav-link">Uniform Rules</a>
+                <a href="#attendance" class="nav-link">Attendance</a>
+                <a href="#discipline" class="nav-link">Discipline</a>
+                <a href="#facilities" class="nav-link">Facilities</a>
+                <a href="#safety" class="nav-link">Safety & Security</a>
+            </div>
+        </div>
+
+        <!-- Rules Content -->
+        <div class="rules-content" id="rulesContent">
+            <!-- General Rules Section -->
+            <section id="general" class="rules-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <h2 class="section-title">General School Rules</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item important">
+                        <div class="rule-text">All students must carry their school ID card daily and produce it when requested.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Students should arrive at school 10 minutes before the morning assembly.</div>
+                        <div class="rule-details">Latecomers may not be allowed to enter without a valid reason.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Maintain silence in the corridors and while moving between classes.</div>
+                    </li>
+                    <li class="rule-item warning">
+                        <div class="rule-text">Mobile phones and electronic devices are strictly prohibited during school hours.</div>
+                        <div class="rule-details">If found, devices will be confiscated and returned only to parents.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Respect school property. Damage to property will result in penalty and compensation.</div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Academic Rules Section -->
+            <section id="academic" class="rules-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h2 class="section-title">Academic Rules</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item important">
+                        <div class="rule-text">Complete all homework and assignments on time.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Bring required textbooks, notebooks, and stationery daily.</div>
+                    </li>
+                    <li class="rule-item warning">
+                        <div class="rule-text">No student shall resort to unfair means during examinations.</div>
+                        <div class="rule-details">Malpractice will lead to suspension and cancellation of examination.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Maintain a minimum of 75% attendance to be eligible for examinations.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Seek permission from teachers before leaving the classroom during lesson hours.</div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Code of Conduct Section -->
+            <section id="conduct" class="rules-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h2 class="section-title">Code of Conduct</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item important">
+                        <div class="rule-text">Respect teachers, staff, and fellow students at all times.</div>
+                    </li>
+                    <li class="rule-item warning">
+                        <div class="rule-text">Bullying, harassment, or discrimination of any kind will not be tolerated.</div>
+                        <div class="rule-details">Such behavior will lead to strict disciplinary action.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Use polite language and maintain decorum within school premises.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Participate actively in school activities and community service programs.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Maintain honesty and integrity in all academic and non-academic matters.</div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Uniform Rules Section -->
+            <section id="uniform" class="rules-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h2 class="section-title">Uniform & Appearance</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item important">
+                        <div class="rule-text">Complete school uniform must be worn on all school days.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Hair should be neat, clean, and of natural color.</div>
+                        <div class="rule-details">Boys: Hair above collar; Girls: Long hair tied properly</div>
+                    </li>
+                    <li class="rule-item warning">
+                        <div class="rule-text">No jewelry except small earrings for girls (one pair).</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Nails must be clean, trimmed, and free of nail polish.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Shoes should be clean and properly polished daily.</div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Attendance Rules Section -->
+            <section id="attendance" class="rules-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h2 class="section-title">Attendance Rules</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item important">
+                        <div class="rule-text">75% minimum attendance required for promotion to next class.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Leave application must be submitted in advance for planned absence.</div>
+                    </li>
+                    <li class="rule-item warning">
+                        <div class="rule-text">Medical certificate required for absence exceeding 3 days.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Half-day leaves are generally not permitted except in emergencies.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Attendance during examination days is mandatory.</div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Discipline Rules Section -->
+            <section id="discipline" class="rules-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h2 class="section-title">Disciplinary Procedures</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item important">
+                        <div class="rule-text">All disciplinary matters will be handled by the Disciplinary Committee.</div>
+                    </li>
+                    <li class="rule-item warning">
+                        <div class="rule-text">Repeated violations may lead to suspension or expulsion.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Parents will be informed of any disciplinary action taken.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">A fair hearing will be provided before any major disciplinary action.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Positive behavior reinforcement is encouraged and rewarded.</div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Facilities Rules Section -->
+            <section id="facilities" class="rules-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h2 class="section-title">Facilities Usage</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item">
+                        <div class="rule-text">Library books must be returned within the specified period.</div>
+                    </li>
+                    <li class="rule-item warning">
+                        <div class="rule-text">Computer lab equipment must be handled with care.</div>
+                        <div class="rule-details">Any damage will be charged to the student.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Sports equipment must be returned after use.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Keep all facilities clean and tidy.</div>
+                    </li>
+                    <li class="rule-item important">
+                        <div class="rule-text">Laboratory safety rules must be strictly followed.</div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Safety Rules Section -->
+            <section id="safety" class="rules-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h2 class="section-title">Safety & Security</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item important">
+                        <div class="rule-text">Follow all fire safety and evacuation procedures.</div>
+                    </li>
+                    <li class="rule-item warning">
+                        <div class="rule-text">Unauthorized persons are not allowed inside school premises.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Report any safety hazards immediately to school authorities.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">First aid facilities are available at the medical room.</div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-text">Emergency contact numbers are displayed in all classrooms.</div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- PDF Download Section -->
+            <div class="pdf-section">
+                <h3><i class="fas fa-file-pdf"></i> Complete Rules Document</h3>
+                <p>Download the complete School Rules & Regulations document for detailed information, policies, and procedures.</p>
+                <div class="pdf-btns">
+                    <a href="#" class="pdf-btn" onclick="downloadPDF('English')">
+                        <i class="fas fa-download"></i> Download PDF (English)
+                    </a>
+                    <a href="#" class="pdf-btn" onclick="downloadPDF('Amharic')">
+                        <i class="fas fa-download"></i> Download PDF (አማርኛ)
+                    </a>
+                    <a href="#" class="pdf-btn" onclick="printRules()">
+                        <i class="fas fa-print"></i> Print Rules
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Navigation smooth scrolling
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update active link
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Scroll to section
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            const sections = document.querySelectorAll('.rules-section');
+            let foundResults = false;
+            
+            sections.forEach(section => {
+                const sectionText = section.textContent.toLowerCase();
+                const sectionHeader = section.querySelector('.section-title');
+                
+                if (searchTerm === '') {
+                    section.style.display = 'block';
+                    sectionHeader.style.color = '#1a237e';
+                } else if (sectionText.includes(searchTerm)) {
+                    section.style.display = 'block';
+                    sectionHeader.style.color = '#ff6b6b'; // Highlight found sections
+                    foundResults = true;
+                    
+                    // Scroll to first found section
+                    if (!foundResults) {
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+            
+            // Show message if no results found
+            if (!foundResults && searchTerm !== '') {
+                alert(`No rules found for "${searchTerm}". Try different keywords.`);
+            }
+        });
+
+        // Highlight active section on scroll
+        const sections = document.querySelectorAll('.rules-section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Download PDF function
+        function downloadPDF(language) {
+            alert(`In a production environment, this would download the complete School Rules document in ${language}.\n\nFor now, all rules are displayed on this page.`);
+        }
+
+        // Print rules function
+        function printRules() {
+            const printContent = document.getElementById('rulesContent').innerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>DANFER School - Rules & Regulations</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                        h1 { color: #1a237e; text-align: center; margin-bottom: 30px; }
+                        h2 { color: #1a237e; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+                        .section { margin-bottom: 30px; }
+                        .rule-item { margin-bottom: 10px; padding-left: 25px; position: relative; }
+                        .rule-item:before { content: '•'; position: absolute; left: 0; color: #1a237e; }
+                        @media print {
+                            .no-print { display: none; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>DANFER SCHOOL RULES & REGULATIONS</h1>
+                    <p style="text-align: center; color: #666; margin-bottom: 40px;">Effective from: ${new Date().toLocaleDateString()}</p>
+                    ${printContent}
+                    <div style="margin-top: 50px; text-align: center; font-size: 0.9rem; color: #666;">
+                        <p>DANFER School Administration</p>
+                        <p>Xadecha, Dukem, Ethiopia</p>
+                        <p>Tel: +251-912345678 | Email: danferschool@gmail.com</p>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            window.print();
+            document.body.innerHTML = originalContent;
+            location.reload();
+        }
+
+        // Auto-scroll to section from URL hash
+        window.addEventListener('load', () => {
+            if (window.location.hash) {
+                const targetSection = document.querySelector(window.location.hash);
+                if (targetSection) {
+                    setTimeout(() => {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
